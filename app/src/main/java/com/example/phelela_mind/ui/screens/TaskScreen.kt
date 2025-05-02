@@ -12,7 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.ui.components.TaskItem
+import com.example.phelela_mind.ui.components.task.TaskItem
 
 @Composable
 fun TaskScreen(modifier: Modifier = Modifier) {
