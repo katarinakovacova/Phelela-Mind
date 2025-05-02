@@ -1,4 +1,4 @@
-package com.example.phelela_mind.ui.components
+package com.example.phelela_mind.ui.components.task
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

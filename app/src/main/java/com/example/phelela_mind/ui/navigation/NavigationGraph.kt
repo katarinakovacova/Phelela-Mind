@@ -53,7 +53,7 @@ fun SetUpNavigationGraph(
         }
 
         composable(Screens.Sudoku.route) {
-            SudokuScreen(innerPadding = innerPadding)
+            SudokuScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }
