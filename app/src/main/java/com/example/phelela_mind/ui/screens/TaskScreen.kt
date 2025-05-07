@@ -1,28 +1,29 @@
 package com.example.phelela_mind.ui.screens
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.phelela_mind.ui.components.task.TaskItem
+import com.example.phelela_mind.ui.viewmodel.TaskViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TaskScreen(modifier: Modifier = Modifier) {
+fun TaskScreen(
+    modifier: Modifier = Modifier
+) {
+    val viewModel: TaskViewModel = koinViewModel()
 
     var taskText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
     }
-    var tasks by rememberSaveable {
-        mutableStateOf(listOf<String>())
-    }
+
+    val tasks by viewModel.tasks.collectAsState()
 
     Column(
         modifier = modifier
@@ -30,7 +31,6 @@ fun TaskScreen(modifier: Modifier = Modifier) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-
         OutlinedTextField(
             value = taskText,
             onValueChange = { taskText = it },
@@ -43,7 +43,7 @@ fun TaskScreen(modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 if (taskText.text.isNotBlank()) {
-                    tasks = tasks + taskText.text
+                    viewModel.addTask(taskText.text)
                     taskText = TextFieldValue("")
                 }
             },
@@ -56,7 +56,7 @@ fun TaskScreen(modifier: Modifier = Modifier) {
 
         Column {
             tasks.forEach { task ->
-                TaskItem(task)
+                TaskItem(task.title)
             }
         }
     }

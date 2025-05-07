@@ -41,13 +41,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.phelela_mind.di.databaseModule
 import com.example.phelela_mind.ui.navigation.NavigationBarBody
 import com.example.phelela_mind.ui.navigation.NavigationBarHeader
 import com.example.phelela_mind.ui.navigation.NavigationItem
 import com.example.phelela_mind.ui.navigation.Screens
 import com.example.phelela_mind.ui.navigation.SetUpNavigationGraph
 import com.example.phelela_mind.ui.theme.NavigationDrawerJetpackComposeTheme
-
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -55,6 +57,12 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(databaseModule)
+        }
+
         setContent {
             NavigationDrawerJetpackComposeTheme {
                 val items = listOf(

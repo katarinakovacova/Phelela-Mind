@@ -1,7 +1,7 @@
 package com.example.phelela_mind.domain.sudoku
 
 class MaskSudokuUseCase {
-    fun generateVisibleMask(visibleCount: Int = 20): Array<Array<Boolean>> {
+    fun generateVisibleMask(visibleCount: Int = 28): Array<Array<Boolean>> {
         val maskForSudoku = Array(9) { Array(9) { false } }
         val positions = mutableListOf<Pair<Int, Int>>()
 
