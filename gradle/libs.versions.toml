@@ -49,7 +49,12 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+koin-android-compose = { module = "io.insert-koin:koin-android-compose", version.ref = "koinAndroidCompose" }
+koin-android-v312 = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
 koin-android-compose = { module = "io.insert-koin:koin-android-compose", version.ref = "koinAndroidCompose" }
 koin-android-v312 = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
