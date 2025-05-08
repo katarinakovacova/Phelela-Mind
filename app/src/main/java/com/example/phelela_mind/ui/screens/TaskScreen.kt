@@ -9,6 +9,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.phelela_mind.data.TaskEntity
 import com.example.phelela_mind.ui.components.task.TaskItem
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -24,6 +25,8 @@ fun TaskScreen(
     }
 
     val tasks by viewModel.tasks.collectAsState()
+    var taskBeingEdited by remember { mutableStateOf<TaskEntity?>(null) }
+    var editedText by remember { mutableStateOf(TextFieldValue("")) }
 
     Column(
         modifier = modifier
@@ -56,8 +59,46 @@ fun TaskScreen(
 
         Column {
             tasks.forEach { task ->
-                TaskItem(task.title)
+                TaskItem(
+                    task = task,
+                    onEdit = {
+                        taskBeingEdited = task
+                        editedText = TextFieldValue(task.title)
+                    },
+                    onDelete = {
+                        viewModel.deleteTask(task)
+                    }
+                )
             }
         }
+    }
+
+    if (taskBeingEdited != null) {
+        AlertDialog(
+            onDismissRequest = { taskBeingEdited = null },
+            confirmButton = {
+                TextButton(onClick = {
+                    val updatedTask = taskBeingEdited!!.copy(title = editedText.text)
+                    viewModel.updateTask(updatedTask)
+                    taskBeingEdited = null
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { taskBeingEdited = null }) {
+                    Text("Cancel")
+                }
+            },
+            title = { Text("Edit Task") },
+            text = {
+                OutlinedTextField(
+                    value = editedText,
+                    onValueChange = { editedText = it },
+                    label = { Text("Task Title") },
+                    singleLine = true
+                )
+            }
+        )
     }
 }
