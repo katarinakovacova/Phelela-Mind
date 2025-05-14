@@ -58,18 +58,6 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-koin-android-compose = { module = "io.insert-koin:koin-android-compose", version.ref = "koinAndroidCompose" }
-koin-android-v312 = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-
-koin-android-compose = { module = "io.insert-koin:koin-android-compose", version.ref = "koinAndroidCompose" }
-koin-android-v312 = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
