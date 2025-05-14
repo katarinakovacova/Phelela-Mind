@@ -44,7 +44,7 @@ fun CalendarScreen(innerPadding: PaddingValues) {
         val selectedDateMillis = datePickerState.selectedDateMillis
         val formattedDate = remember(selectedDateMillis) {
             selectedDateMillis?.let {
-                SimpleDateFormat("d MMMM yyyy", Locale("en", "GB")).format(Date(it))
+                SimpleDateFormat("dd/MM/yyyy", Locale("en", "GB")).format(Date(it))
             } ?: "No date selected"
         }
 
@@ -56,5 +56,3 @@ fun CalendarScreen(innerPadding: PaddingValues) {
         )
     }
 }
-
-
