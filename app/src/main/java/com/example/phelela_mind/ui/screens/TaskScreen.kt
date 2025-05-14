@@ -70,6 +70,7 @@ fun TaskScreen(
                     },
                     onCheckedChange = { isChecked ->
                         viewModel.onTaskCheckedChange(task, isChecked)
+
                     }
                 )
             }

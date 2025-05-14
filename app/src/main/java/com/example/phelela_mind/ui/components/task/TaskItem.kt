@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.example.phelela_mind.data.TaskEntity
 import androidx.compose.ui.text.style.TextDecoration
 
-
 @Composable
 fun TaskItem(
     task: TaskEntity,
@@ -21,6 +20,8 @@ fun TaskItem(
     onDelete: () -> Unit,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    var expanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,6 +62,7 @@ fun TaskItem(
                 }
                 IconButton(onClick = onDelete) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
+
                 }
             }
         }
