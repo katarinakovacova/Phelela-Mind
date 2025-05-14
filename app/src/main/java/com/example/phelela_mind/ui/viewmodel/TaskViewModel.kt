@@ -34,4 +34,9 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
             taskDao.updateTask(task)
         }
     }
+
+    fun onTaskCheckedChange(task: TaskEntity, isChecked: Boolean) {
+        val updatedTask = task.copy(isDone = isChecked)
+        updateTask(updatedTask)
+    }
 }
