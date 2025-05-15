@@ -101,35 +101,36 @@ fun TaskScreen(
                 }
             }
         }
-    }
 
-    if (taskBeingEdited != null) {
-        AlertDialog(
-            onDismissRequest = { taskBeingEdited = null },
-            confirmButton = {
-                TextButton(onClick = {
-                    val updatedTask = taskBeingEdited!!.copy(title = editedText.text)
-                    viewModel.updateTask(updatedTask)
-                    taskBeingEdited = null
-                }) {
-                    Text("Save")
+
+        if (taskBeingEdited != null) {
+            AlertDialog(
+                onDismissRequest = { taskBeingEdited = null },
+                confirmButton = {
+                    TextButton(onClick = {
+                        val updatedTask = taskBeingEdited!!.copy(title = editedText.text)
+                        viewModel.updateTask(updatedTask)
+                        taskBeingEdited = null
+                    }) {
+                        Text("Save")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { taskBeingEdited = null }) {
+                        Text("Cancel")
+                    }
+                },
+                title = { Text("Edit Task") },
+                text = {
+                    OutlinedTextField(
+                        value = editedText,
+                        onValueChange = { editedText = it },
+                        label = { Text("Task Title") },
+                        singleLine = true
+                    )
                 }
-            },
-            dismissButton = {
-                TextButton(onClick = { taskBeingEdited = null }) {
-                    Text("Cancel")
-                }
-            },
-            title = { Text("Edit Task") },
-            text = {
-                OutlinedTextField(
-                    value = editedText,
-                    onValueChange = { editedText = it },
-                    label = { Text("Task Title") },
-                    singleLine = true
-                )
-            }
-        )
+            )
+        }
     }
 
     if (showDatePicker) {

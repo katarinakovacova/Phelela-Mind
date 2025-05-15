@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.example.phelela_mind.data.TaskEntity
 import androidx.compose.ui.text.style.TextDecoration
 
-
 @Composable
 fun TaskItem(
     task: TaskEntity,
@@ -68,13 +67,14 @@ fun TaskItem(
                     }
                 }
             }
-
+          
             Row {
                 IconButton(onClick = onEdit) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit")
                 }
                 IconButton(onClick = onDelete) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
+
                 }
             }
         }
