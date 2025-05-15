@@ -82,6 +82,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
 
-    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation(libs.androidx.material3)
 
 }
