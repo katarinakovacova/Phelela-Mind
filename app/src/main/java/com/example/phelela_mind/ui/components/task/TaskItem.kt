@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextDecoration
 @Composable
 fun TaskItem(
     task: TaskEntity,
-    onEdit: () -> Unit,
+    onEdit: (() -> Unit)? = null,
     onDelete: () -> Unit,
     onCheckedChange: (Boolean) -> Unit
 ) {
@@ -69,8 +69,10 @@ fun TaskItem(
             }
           
             Row {
-                IconButton(onClick = onEdit) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                if (onEdit != null) {
+                    IconButton(onClick = onEdit) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit")
+                    }
                 }
                 IconButton(onClick = onDelete) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")

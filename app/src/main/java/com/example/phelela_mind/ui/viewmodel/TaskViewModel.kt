@@ -1,5 +1,7 @@
 package com.example.phelela_mind.ui.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.phelela_mind.data.TaskDao
@@ -7,6 +9,8 @@ import com.example.phelela_mind.data.TaskEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 
 class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
@@ -87,4 +91,21 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
         }
         return calendar.timeInMillis
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val tasksForToday: StateFlow<List<TaskEntity>> = getTasksForDateFlow(todayStart, todayEnd)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private fun getTasksForDateFlow(start: Long, end: Long): Flow<List<TaskEntity>> {
+        return taskDao.getTasksForDate(start, end)
+    }
+
+    private val todayStart: Long
+        @RequiresApi(Build.VERSION_CODES.O)
+        get() = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+    private val todayEnd: Long
+        @RequiresApi(Build.VERSION_CODES.O)
+        get() = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
 }
