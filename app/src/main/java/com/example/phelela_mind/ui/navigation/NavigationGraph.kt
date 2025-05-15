@@ -17,6 +17,8 @@ import com.example.phelela_mind.ui.screens.SettingsScreen
 import com.example.phelela_mind.ui.screens.StatisticScreen
 import com.example.phelela_mind.ui.screens.SudokuScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
+import com.example.phelela_mind.ui.viewmodel.TaskViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
@@ -35,7 +37,8 @@ fun SetUpNavigationGraph(
         }
 
         composable(Screens.Calendar.route) {
-            CalendarScreen(innerPadding = innerPadding)
+            val viewModel: TaskViewModel = koinViewModel()
+            CalendarScreen(innerPadding = innerPadding, viewModel = viewModel)
         }
 
         composable(Screens.Notification.route) {
