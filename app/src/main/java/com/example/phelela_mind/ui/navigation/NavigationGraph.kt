@@ -1,6 +1,8 @@
 package com.example.phelela_mind.ui.navigation
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -21,6 +23,7 @@ import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SetUpNavigationGraph(
     navController: NavHostController,
@@ -29,7 +32,8 @@ fun SetUpNavigationGraph(
 
     NavHost(navController = navController, startDestination = Screens.Home.route) {
         composable(Screens.Home.route) {
-            HomeScreen(innerPadding = innerPadding)
+            val viewModel: TaskViewModel = koinViewModel()
+            HomeScreen(innerPadding = innerPadding, viewModel = viewModel)
         }
 
         composable(Screens.Task.route) {
