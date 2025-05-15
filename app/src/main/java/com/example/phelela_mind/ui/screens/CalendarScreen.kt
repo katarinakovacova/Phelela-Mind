@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.ui.Alignment
@@ -19,7 +18,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CalendarScreen(innerPadding: PaddingValues) {
     val datePickerState = rememberDatePickerState()
-    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedDateFormatted by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -29,12 +29,6 @@ fun CalendarScreen(innerPadding: PaddingValues) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Select a date",
-            fontSize = 30.sp,
-            color = Color.Black,
-            modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
-        )
 
         DatePicker(
             state = datePickerState,
@@ -42,17 +36,34 @@ fun CalendarScreen(innerPadding: PaddingValues) {
         )
 
         val selectedDateMillis = datePickerState.selectedDateMillis
-        val formattedDate = remember(selectedDateMillis) {
+
+        LaunchedEffect(selectedDateMillis) {
             selectedDateMillis?.let {
-                SimpleDateFormat("dd/MM/yyyy", Locale("en", "GB")).format(Date(it))
-            } ?: "No date selected"
+                val formatted = SimpleDateFormat("dd/MM/yyyy", Locale("en", "GB"))
+                    .format(Date(it))
+                selectedDateFormatted = formatted
+                showDialog = true
+            }
         }
 
         Text(
-            text = "Selected date: $formattedDate",
+            text = "Selected date: ${selectedDateFormatted ?: "No date selected"}",
             fontSize = 18.sp,
             color = Color.DarkGray,
             modifier = Modifier.padding(top = 16.dp)
+        )
+    }
+
+    if (showDialog && selectedDateFormatted != null) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Selected Date") },
+            text = { Text("To-do list for your day: $selectedDateFormatted") }
         )
     }
 }

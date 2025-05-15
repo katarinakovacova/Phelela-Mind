@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +26,7 @@ fun TaskItem(
             .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation()
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -34,7 +34,7 @@ fun TaskItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // ĽAVÁ ČASŤ: checkbox a text
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.weight(1f)
@@ -46,15 +46,29 @@ fun TaskItem(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                Text(
-                    text = task.title,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        textDecoration = if (task.isDone) TextDecoration.LineThrough else TextDecoration.None
+                Column {
+                    Text(
+                        text = task.title,
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            textDecoration = if (task.isDone) TextDecoration.LineThrough else TextDecoration.None
+                        )
                     )
-                )
+
+                    task.scheduledForDate?.let { millis ->
+                        val formattedDate = remember(millis) {
+                            val date = java.util.Date(millis)
+                            java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale("en", "GB")).format(date)
+                        }
+
+                        Text(
+                            text = formattedDate,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
             }
 
-            // PRAVÁ ČASŤ: akcie
             Row {
                 IconButton(onClick = onEdit) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit")

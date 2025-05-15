@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.phelela_mind.data.TaskDao
 import com.example.phelela_mind.data.TaskEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
 
@@ -16,9 +18,33 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
             emptyList()
         )
 
-    fun addTask(title: String) {
+    private val _selectedDateMillis = MutableStateFlow<Long?>(null)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val tasksForSelectedDate: StateFlow<List<TaskEntity>> = _selectedDateMillis
+        .filterNotNull()
+        .flatMapLatest { millis ->
+            val startOfDay = getStartOfDayInMillis(millis)
+            val endOfDay = getEndOfDayInMillis(millis)
+            taskDao.getTasksForDate(startOfDay, endOfDay)
+        }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
+
+    fun setSelectedDate(millis: Long) {
+        _selectedDateMillis.value = millis
+    }
+
+    fun addTask(title: String, scheduledForDate: Long? = null) {
         viewModelScope.launch {
-            val newTask = TaskEntity(title = title, description = null)
+            val newTask = TaskEntity(
+                title = title,
+                description = null,
+                scheduledForDate = scheduledForDate ?: System.currentTimeMillis()
+            )
             taskDao.insertTask(newTask)
         }
     }
@@ -38,5 +64,27 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
     fun onTaskCheckedChange(task: TaskEntity, isChecked: Boolean) {
         val updatedTask = task.copy(isDone = isChecked)
         updateTask(updatedTask)
+    }
+
+    private fun getStartOfDayInMillis(millis: Long): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = millis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
+    }
+
+    private fun getEndOfDayInMillis(millis: Long): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = millis
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }
+        return calendar.timeInMillis
     }
 }

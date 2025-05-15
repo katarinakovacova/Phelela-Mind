@@ -24,6 +24,7 @@ fun SetUpNavigationGraph(
     navController: NavHostController,
     innerPadding: PaddingValues
 ) {
+
     NavHost(navController = navController, startDestination = Screens.Home.route) {
         composable(Screens.Home.route) {
             HomeScreen(innerPadding = innerPadding)
