@@ -1,10 +1,10 @@
 package com.example.phelela_mind.ui.components.sudoku
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +19,9 @@ fun SudokuGrid(
 ) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
-            .border(4.dp, Color.Black)
-            .background(Color.Black)
+            .wrapContentSize()
+            .border(3.dp, Color.Black)
+            .padding(1.dp)
     ) {
         for (rowIndex in 0..8) {
             Row {

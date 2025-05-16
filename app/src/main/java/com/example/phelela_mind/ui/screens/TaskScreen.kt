@@ -34,6 +34,9 @@ fun TaskScreen(
     var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }
     var showDatePicker by remember { mutableStateOf(false) }
 
+    var taskToDelete by remember { mutableStateOf<TaskEntity?>(null) }
+    var showDeleteConfirmDialog by remember { mutableStateOf(false) }
+
     val dateFormat = remember { SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()) }
     val datePickerState = rememberDatePickerState()
 
@@ -92,7 +95,8 @@ fun TaskScreen(
                             editedText = TextFieldValue(task.title)
                         },
                         onDelete = {
-                            viewModel.deleteTask(task)
+                            taskToDelete = task
+                            showDeleteConfirmDialog = true
                         },
                         onCheckedChange = { isChecked ->
                             viewModel.onTaskCheckedChange(task, isChecked)
@@ -102,13 +106,47 @@ fun TaskScreen(
             }
         }
 
+        if (showDeleteConfirmDialog && taskToDelete != null) {
+            AlertDialog(
+                onDismissRequest = {
+                    showDeleteConfirmDialog = false
+                    taskToDelete = null
+                },
+                title = { Text("Delete Task") },
+                text = { Text("Are you sure you want to delete the task \"${taskToDelete!!.title}\"?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.deleteTask(taskToDelete!!)
+                        showDeleteConfirmDialog = false
+                        taskToDelete = null
+                    }) {
+                        Text("Delete")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        showDeleteConfirmDialog = false
+                        taskToDelete = null
+                    }) {
+                        Text("Cancel")
+                    }
+                }
+            )
+        }
 
         if (taskBeingEdited != null) {
+            var editedDateMillis by remember { mutableLongStateOf(taskBeingEdited!!.scheduledForDate ?: System.currentTimeMillis()) }
+            val editDatePickerState = rememberDatePickerState(initialSelectedDateMillis = editedDateMillis)
+            var showEditDatePicker by remember { mutableStateOf(false) }
+
             AlertDialog(
                 onDismissRequest = { taskBeingEdited = null },
                 confirmButton = {
                     TextButton(onClick = {
-                        val updatedTask = taskBeingEdited!!.copy(title = editedText.text)
+                        val updatedTask = taskBeingEdited!!.copy(
+                            title = editedText.text,
+                            scheduledForDate = editedDateMillis
+                        )
                         viewModel.updateTask(updatedTask)
                         taskBeingEdited = null
                     }) {
@@ -122,14 +160,41 @@ fun TaskScreen(
                 },
                 title = { Text("Edit Task") },
                 text = {
-                    OutlinedTextField(
-                        value = editedText,
-                        onValueChange = { editedText = it },
-                        label = { Text("Task Title") },
-                        singleLine = true
-                    )
+                    Column {
+                        OutlinedTextField(
+                            value = editedText,
+                            onValueChange = { editedText = it },
+                            label = { Text("Task Title") },
+                            singleLine = true
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Button(onClick = { showEditDatePicker = true }) {
+                            Text("Scheduled for: ${dateFormat.format(Date(editedDateMillis))}")
+                        }
+                    }
                 }
             )
+
+            if (showEditDatePicker) {
+                DatePickerDialog(
+                    onDismissRequest = { showEditDatePicker = false },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            editedDateMillis = editDatePickerState.selectedDateMillis ?: editedDateMillis
+                            showEditDatePicker = false
+                        }) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showEditDatePicker = false }) {
+                            Text("Cancel")
+                        }
+                    }
+                ) {
+                    DatePicker(state = editDatePickerState)
+                }
+            }
         }
     }
 
