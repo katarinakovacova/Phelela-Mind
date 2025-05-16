@@ -107,5 +107,4 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
     private val todayEnd: Long
         @RequiresApi(Build.VERSION_CODES.O)
         get() = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
 }

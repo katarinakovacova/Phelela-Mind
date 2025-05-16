@@ -1,22 +1,29 @@
 package com.example.phelela_mind.ui.components.sudoku
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
-fun TimerDisplay(minutes: String, seconds: String, onStop: () -> Unit, onStart: () -> Unit) {
-    Box(
-        modifier = Modifier
+fun TimerDisplay(
+    minutes: String,
+    seconds: String,
+    onStop: () -> Unit,
+    onStart: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        tonalElevation = 4.dp,
+        modifier = modifier
             .clickable {
                 if (minutes == "00" && seconds == "00") {
                     onStart()
@@ -24,15 +31,15 @@ fun TimerDisplay(minutes: String, seconds: String, onStop: () -> Unit, onStart: 
                     onStop()
                 }
             }
-            .padding(16.dp)
-            .background(Color.Gray, shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-        Text(
-            text = "$minutes:$seconds",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
+        Box(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        ) {
+            Text(
+                text = "$minutes:$seconds",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
     }
 }
