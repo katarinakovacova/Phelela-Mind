@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.phelela_mind.di.databaseModule
+import com.example.phelela_mind.di.sudokuModule
 import com.example.phelela_mind.ui.navigation.NavigationBarBody
 import com.example.phelela_mind.ui.navigation.NavigationBarHeader
 import com.example.phelela_mind.ui.navigation.NavigationItem
@@ -63,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
         startKoin {
             androidContext(this@MainActivity)
-            modules(databaseModule)
+            modules(listOf(sudokuModule, databaseModule))
         }
 
         setContent {

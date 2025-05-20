@@ -8,48 +8,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.domain.sudoku.GenerateSudokuUseCase
-import com.example.phelela_mind.domain.sudoku.MaskSudokuUseCase
-import com.example.phelela_mind.ui.components.sudoku.ActionBar
-import com.example.phelela_mind.ui.components.sudoku.GameTopBar
+import com.example.phelela_mind.ui.components.sudoku.LevelSelectionDialog
+import com.example.phelela_mind.ui.components.sudoku.LowerActionBar
 import com.example.phelela_mind.ui.components.sudoku.NumberSelector
 import com.example.phelela_mind.ui.components.sudoku.Overlay
 import com.example.phelela_mind.ui.components.sudoku.SudokuGrid
-import kotlinx.coroutines.delay
+import com.example.phelela_mind.ui.components.sudoku.UpperActionBar
+import com.example.phelela_mind.ui.viewmodel.SudokuViewModel
 
 @Composable
-fun SudokuScreen(modifier: Modifier = Modifier) {
-    val sudokuSolver = remember { GenerateSudokuUseCase() }
-    val maskSudoku = remember { MaskSudokuUseCase() }
+fun SudokuScreen(
+    viewModel: SudokuViewModel,
+    modifier: Modifier = Modifier
+) {
+    val completeGrid by viewModel.completeGrid.collectAsState()
+    val sudokuState by viewModel.sudokuState.collectAsState()
+    val originalCells by viewModel.originalCells.collectAsState()
+    val selectedCell by viewModel.selectedCell.collectAsState()
+    val difficulty by viewModel.difficulty.collectAsState()
 
-    var completeSudoku by remember { mutableStateOf(sudokuSolver.generateSudokuGrid()) }
-    val initialMask = remember { maskSudoku.generateVisibleMask() }
-
-    var initialSudokuState by remember {
-        mutableStateOf(
-            completeSudoku.mapIndexed { row, rowList ->
-                rowList.mapIndexed { col, value ->
-                    if (initialMask[row][col]) value else null
-                }
-            }
-        )
-    }
-
-    var sudokuState by remember { mutableStateOf(initialSudokuState) }
-    var originalCells by remember { mutableStateOf(initialMask.map { row -> row.map { it } }) }
-    var selectedCell by remember { mutableStateOf<Pair<Int, Int>?>(null) }
-
-    var time by remember { mutableIntStateOf(0) }
-    var isTimerRunning by remember { mutableStateOf(false) }
-    var isOverlayVisible by remember { mutableStateOf(false) }
+    var time by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(0) }
+    var isTimerRunning by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var isOverlayVisible by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var showLevelDialog by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
 
     val stopTimer = {
         isTimerRunning = false
@@ -66,7 +53,7 @@ fun SudokuScreen(modifier: Modifier = Modifier) {
     LaunchedEffect(isTimerRunning) {
         if (isTimerRunning) {
             while (true) {
-                delay(1000L)
+                kotlinx.coroutines.delay(1000L)
                 time += 1
             }
         }
@@ -75,6 +62,18 @@ fun SudokuScreen(modifier: Modifier = Modifier) {
     val minutes = (time / 60).toString().padStart(2, '0')
     val seconds = (time % 60).toString().padStart(2, '0')
 
+    if (showLevelDialog) {
+        LevelSelectionDialog(
+            onDismissRequest = { showLevelDialog = false },
+            onLevelSelected = { selectedDifficulty ->
+                showLevelDialog = false
+                time = 0
+                startTimer()
+                viewModel.generateNewGame(selectedDifficulty)
+            }
+        )
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -82,28 +81,13 @@ fun SudokuScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        GameTopBar(
-            onNewGame = {
-                time = 0
-                startTimer()
-
-                completeSudoku = sudokuSolver.generateSudokuGrid()
-                val newSudokuMask = maskSudoku.generateVisibleMask()
-                val newSudoku = completeSudoku.mapIndexed { row, rowList ->
-                    rowList.mapIndexed { col, value ->
-                        if (newSudokuMask[row][col]) value else null
-                    }
-                }
-
-                sudokuState = newSudoku
-                initialSudokuState = newSudoku.map { it.toList() }
-                originalCells = newSudoku.map { row -> row.map { it != null } }
-                selectedCell = null
-            },
+        UpperActionBar(
+            onNewGame = { showLevelDialog = true },
             minutes = minutes,
             seconds = seconds,
             onStop = stopTimer,
-            onStart = startTimer
+            onStart = startTimer,
+            difficulty = difficulty
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -121,36 +105,25 @@ fun SudokuScreen(modifier: Modifier = Modifier) {
             selectedCell = selectedCell
         ) { row, col ->
             if (!originalCells[row][col]) {
-                selectedCell = if (selectedCell == Pair(row, col)) null else Pair(row, col)
+                viewModel.selectCell(row, col)
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ActionBar(
+        LowerActionBar(
             onErase = {
                 selectedCell?.let { (row, col) ->
-                    if (!originalCells[row][col]) {
-                        sudokuState = sudokuState.mapIndexed { r, rowList ->
-                            rowList.mapIndexed { c, cell ->
-                                if (r == row && c == col) null else cell
-                            }
-                        }
-                    }
+                    viewModel.eraseNumber(row, col)
                 }
             },
             onHint = {
                 selectedCell?.let { (row, col) ->
-                    sudokuState = sudokuState.mapIndexed { r, rowList ->
-                        rowList.mapIndexed { c, cell ->
-                            if (r == row && c == col) completeSudoku[row][col] else cell
-                        }
-                    }
+                    viewModel.getHint(row, col)
                 }
             },
             onRestart = {
-                sudokuState = initialSudokuState.map { it.toList() }
-                selectedCell = null
+                viewModel.restartGame()
             }
         )
 
@@ -158,13 +131,7 @@ fun SudokuScreen(modifier: Modifier = Modifier) {
 
         NumberSelector { number ->
             selectedCell?.let { (row, col) ->
-                if (!originalCells[row][col]) {
-                    sudokuState = sudokuState.mapIndexed { r, rowList ->
-                        rowList.mapIndexed { c, cell ->
-                            if (r == row && c == col) number else cell
-                        }
-                    }
-                }
+                viewModel.setNumber(row, col, number)
             }
         }
     }
