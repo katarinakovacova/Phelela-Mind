@@ -19,7 +19,9 @@ import com.example.phelela_mind.ui.screens.SettingsScreen
 import com.example.phelela_mind.ui.screens.StatisticScreen
 import com.example.phelela_mind.ui.screens.SudokuScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
+import com.example.phelela_mind.ui.viewmodel.SudokuViewModel
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -62,7 +64,11 @@ fun SetUpNavigationGraph(
         }
 
         composable(Screens.Sudoku.route) {
-            SudokuScreen(modifier = Modifier.padding(innerPadding))
+            val sudokuViewModel: SudokuViewModel = getViewModel()
+            SudokuScreen(
+                viewModel = sudokuViewModel,
+                modifier = Modifier.padding(innerPadding)
+            )
         }
     }
 }
