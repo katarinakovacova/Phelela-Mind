@@ -1,4 +1,4 @@
-package com.example.phelela_mind.data
+package com.example.phelela_mind.data.task
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

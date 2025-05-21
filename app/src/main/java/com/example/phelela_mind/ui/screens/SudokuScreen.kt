@@ -1,5 +1,6 @@
 package com.example.phelela_mind.ui.screens
 
+import SudokuViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +21,6 @@ import com.example.phelela_mind.ui.components.sudoku.NumberSelector
 import com.example.phelela_mind.ui.components.sudoku.Overlay
 import com.example.phelela_mind.ui.components.sudoku.SudokuGrid
 import com.example.phelela_mind.ui.components.sudoku.UpperActionBar
-import com.example.phelela_mind.ui.viewmodel.SudokuViewModel
 
 @Composable
 fun SudokuScreen(
@@ -32,31 +32,19 @@ fun SudokuScreen(
     val originalCells by viewModel.originalCells.collectAsState()
     val selectedCell by viewModel.selectedCell.collectAsState()
     val difficulty by viewModel.difficulty.collectAsState()
+    val time by viewModel.time.collectAsState()
 
-    var time by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(0) }
-    var isTimerRunning by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     var isOverlayVisible by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     var showLevelDialog by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
 
     val stopTimer = {
-        isTimerRunning = false
+        viewModel.stopTimer()
         isOverlayVisible = true
     }
 
     val startTimer = {
-        isTimerRunning = true
+        viewModel.startTimer()
         isOverlayVisible = false
-    }
-
-    LaunchedEffect(Unit) { startTimer() }
-
-    LaunchedEffect(isTimerRunning) {
-        if (isTimerRunning) {
-            while (true) {
-                kotlinx.coroutines.delay(1000L)
-                time += 1
-            }
-        }
     }
 
     val minutes = (time / 60).toString().padStart(2, '0')
@@ -67,9 +55,8 @@ fun SudokuScreen(
             onDismissRequest = { showLevelDialog = false },
             onLevelSelected = { selectedDifficulty ->
                 showLevelDialog = false
-                time = 0
-                startTimer()
                 viewModel.generateNewGame(selectedDifficulty)
+                startTimer()
             }
         )
     }
@@ -99,14 +86,18 @@ fun SudokuScreen(
             })
         }
 
-        SudokuGrid(
-            sudoku = sudokuState,
-            originalCells = originalCells,
-            selectedCell = selectedCell
-        ) { row, col ->
-            if (!originalCells[row][col]) {
-                viewModel.selectCell(row, col)
+        if (sudokuState.isNotEmpty() && originalCells.isNotEmpty()) {
+            SudokuGrid(
+                sudoku = sudokuState,
+                originalCells = originalCells,
+                selectedCell = selectedCell
+            ) { row, col ->
+                if (!originalCells[row][col]) {
+                    viewModel.selectCell(row, col)
+                }
             }
+        } else {
+            Spacer(modifier = Modifier.height(200.dp))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -124,6 +115,7 @@ fun SudokuScreen(
             },
             onRestart = {
                 viewModel.restartGame()
+                startTimer()
             }
         )
 

@@ -83,5 +83,7 @@ dependencies {
     implementation(libs.koin.compose)
 
     implementation(libs.androidx.material3)
+    implementation(libs.gson)
+
 
 }

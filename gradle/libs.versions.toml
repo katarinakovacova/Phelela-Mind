@@ -1,6 +1,7 @@
 [versions]
 accompanistCalendar = "0.23.1"
 agp = "8.8.2"
+gson = "2.10.1"
 koinAndroid = "3.1.2"
 koinAndroidCompose = "3.1.2"
 kotlin = "2.0.0"
@@ -48,6 +49,7 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
