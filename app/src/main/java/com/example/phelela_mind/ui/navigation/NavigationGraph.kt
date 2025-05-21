@@ -1,6 +1,7 @@
 package com.example.phelela_mind.ui.navigation
 
 
+import SudokuViewModel
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +20,6 @@ import com.example.phelela_mind.ui.screens.SettingsScreen
 import com.example.phelela_mind.ui.screens.StatisticScreen
 import com.example.phelela_mind.ui.screens.SudokuScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
-import com.example.phelela_mind.ui.viewmodel.SudokuViewModel
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel

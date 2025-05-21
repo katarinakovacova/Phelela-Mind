@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com.example.phelela_mind.data.TaskEntity
+import com.example.phelela_mind.data.task.TaskEntity
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
