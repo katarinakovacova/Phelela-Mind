@@ -12,9 +12,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.phelela_mind.ui.screens.CalendarScreen
+import com.example.phelela_mind.ui.screens.FinancesScreen
 import com.example.phelela_mind.ui.screens.HomeScreen
 import com.example.phelela_mind.ui.screens.NotificationScreen
-import com.example.phelela_mind.ui.screens.ProfileScreen
 import com.example.phelela_mind.ui.screens.SettingsScreen
 import com.example.phelela_mind.ui.screens.StatisticScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
@@ -48,9 +48,8 @@ fun SetUpNavigationGraph(
             NotificationScreen(innerPadding = innerPadding)
         }
 
-        composable(Screens.Profile.route) {
-            ProfileScreen(innerPadding = innerPadding)
-        }
+        composable("finances") { FinancesScreen(innerPadding = innerPadding) }
+
 
         composable(Screens.Settings.route) {
             SettingsScreen(innerPadding = innerPadding)

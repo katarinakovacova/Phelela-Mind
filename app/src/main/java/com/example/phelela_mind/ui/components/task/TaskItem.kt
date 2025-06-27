@@ -1,4 +1,4 @@
-package com.example.phelela_mind.ui.components
+package com.example.phelela_mind.ui.components.task
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.data.TaskEntity
+import com.example.phelela_mind.data.task.TaskEntity
 import androidx.compose.ui.text.style.TextDecoration
 
 @Composable
