@@ -4,8 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.phelela_mind.data.TaskDao
-import com.example.phelela_mind.data.TaskEntity
+import com.example.phelela_mind.data.task.TaskDao
+import com.example.phelela_mind.data.task.TaskEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
