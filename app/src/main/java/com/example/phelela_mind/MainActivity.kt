@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -20,7 +19,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
@@ -87,12 +85,6 @@ class MainActivity : ComponentActivity() {
                         route = Screens.Calendar.route,
                         selectedIcon = Icons.Filled.DateRange,
                         unselectedIcon = Icons.Outlined.DateRange,
-                    ),
-                    NavigationItem(
-                        title = "Statistics",
-                        route = Screens.Statistics.route,
-                        selectedIcon = Icons.Filled.Info,
-                        unselectedIcon = Icons.Outlined.Info,
                     ),
                     NavigationItem(
                         title = "Notification",

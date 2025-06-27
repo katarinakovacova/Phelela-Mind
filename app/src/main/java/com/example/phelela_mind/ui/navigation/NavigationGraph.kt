@@ -16,7 +16,6 @@ import com.example.phelela_mind.ui.screens.FinancesScreen
 import com.example.phelela_mind.ui.screens.HomeScreen
 import com.example.phelela_mind.ui.screens.NotificationScreen
 import com.example.phelela_mind.ui.screens.SettingsScreen
-import com.example.phelela_mind.ui.screens.StatisticScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -53,10 +52,6 @@ fun SetUpNavigationGraph(
 
         composable(Screens.Settings.route) {
             SettingsScreen(innerPadding = innerPadding)
-        }
-
-        composable(Screens.Statistics.route) {
-            StatisticScreen(innerPadding = innerPadding)
         }
     }
 }
