@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
@@ -20,7 +19,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Done
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Notifications
@@ -44,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.phelela_mind.di.databaseModule
-import com.example.phelela_mind.di.sudokuModule
 import com.example.phelela_mind.ui.navigation.NavigationBarBody
 import com.example.phelela_mind.ui.navigation.NavigationBarHeader
 import com.example.phelela_mind.ui.navigation.NavigationItem
@@ -64,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
         startKoin {
             androidContext(this@MainActivity)
-            modules(listOf(sudokuModule, databaseModule))
+            modules(databaseModule)
         }
 
         setContent {
@@ -101,12 +98,6 @@ class MainActivity : ComponentActivity() {
                         selectedIcon = Icons.Filled.Notifications,
                         unselectedIcon = Icons.Outlined.Notifications,
                         badgeCount = 0
-                    ),
-                    NavigationItem(
-                        title = "Sudoku",
-                        route = Screens.Sudoku.route,
-                        selectedIcon = Icons.Filled.Favorite,
-                        unselectedIcon = Icons.Outlined.Favorite,
                     ),
                     NavigationItem(
                         title = "Profile",
