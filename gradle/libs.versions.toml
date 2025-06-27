@@ -1,9 +1,6 @@
 [versions]
-accompanistCalendar = "0.23.1"
 agp = "8.8.2"
 gson = "2.10.1"
-koinAndroid = "3.1.2"
-koinAndroidCompose = "3.1.2"
 kotlin = "2.0.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -23,7 +20,6 @@ koin = "3.5.3"
 ksp = "2.0.0-1.0.21"
 
 [libraries]
-accompanist-calendar = { module = "com.google.accompanist:accompanist-calendar", version.ref = "accompanistCalendar" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
@@ -56,8 +52,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
-koin-android-compose = { module = "io.insert-koin:koin-android-compose", version.ref = "koinAndroidCompose" }
-koin-android-v312 = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
