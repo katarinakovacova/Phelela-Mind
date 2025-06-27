@@ -84,6 +84,4 @@ dependencies {
 
     implementation(libs.androidx.material3)
     implementation(libs.gson)
-
-
 }
