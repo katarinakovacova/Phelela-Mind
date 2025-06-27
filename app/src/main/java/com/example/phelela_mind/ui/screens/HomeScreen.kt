@@ -24,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.phelela_mind.ui.components.task.TaskItem
+import com.example.phelela_mind.ui.components.TaskItem
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com.example.phelela_mind.data.task.TaskEntity
+import com.example.phelela_mind.data.TaskEntity
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

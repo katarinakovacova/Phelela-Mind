@@ -9,8 +9,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.data.task.TaskEntity
-import com.example.phelela_mind.ui.components.task.TaskItem
+import com.example.phelela_mind.data.TaskEntity
+import com.example.phelela_mind.ui.components.TaskItem
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat

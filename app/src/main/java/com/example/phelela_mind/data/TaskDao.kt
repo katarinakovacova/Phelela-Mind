@@ -1,4 +1,4 @@
-package com.example.phelela_mind.data.task
+package com.example.phelela_mind.data
 
 import androidx.room.Dao
 import androidx.room.Delete
