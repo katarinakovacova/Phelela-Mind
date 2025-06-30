@@ -1,14 +1,16 @@
 package com.example.phelela_mind.di
 
-import org.koin.dsl.module
 import androidx.room.Room
-import org.koin.android.ext.koin.androidContext
 import com.example.phelela_mind.data.AppDatabase
-import com.example.phelela_mind.data.finances.BudgetDao
-import com.example.phelela_mind.data.finances.BudgetRepository
+import com.example.phelela_mind.data.finances.local.BudgetDao
+import com.example.phelela_mind.data.finances.repository.BudgetRepository
+import com.example.phelela_mind.data.task.local.TaskDao
+import com.example.phelela_mind.data.task.repository.TaskRepository
 import com.example.phelela_mind.ui.viewmodel.BudgetViewModel
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 val databaseModule = module {
     single {
@@ -19,19 +21,18 @@ val databaseModule = module {
         )
             .fallbackToDestructiveMigration(true)
             .build()
-
     }
 
-    single { get<AppDatabase>().taskDao() }
+    single<TaskDao> { get<AppDatabase>().taskDao() }
     single<BudgetDao> { get<AppDatabase>().budgetDao() }
-
-    viewModel { TaskViewModel(get()) }
-
 }
 
 val repositoryModule = module {
+    single { TaskRepository(get()) }
     single { BudgetRepository(get()) }
 }
 
 val viewModelModule = module {
-    viewModel { BudgetViewModel(get()) }}
+    viewModel { TaskViewModel(get()) }
+    viewModel { BudgetViewModel(get()) }
+}

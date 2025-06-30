@@ -9,12 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.data.task.TaskEntity
 import androidx.compose.ui.text.style.TextDecoration
+import com.example.phelela_mind.data.task.local.Task
 
 @Composable
 fun TaskItem(
-    task: TaskEntity,
+    task: Task,
     onEdit: (() -> Unit)? = null,
     onDelete: () -> Unit,
     onCheckedChange: (Boolean) -> Unit

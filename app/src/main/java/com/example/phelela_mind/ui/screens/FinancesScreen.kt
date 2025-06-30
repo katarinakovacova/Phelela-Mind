@@ -10,11 +10,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.phelela_mind.data.finances.Budget
+import com.example.phelela_mind.data.finances.local.Budget
 import com.example.phelela_mind.ui.components.budget.BudgetCard
 import com.example.phelela_mind.ui.components.budget.BudgetDialog
 import com.example.phelela_mind.ui.components.budget.ExpenseDialog
@@ -33,8 +32,8 @@ fun FinancesScreen(
         modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
-            .background(Color.White),
-        floatingActionButton = {
+            .background(MaterialTheme.colorScheme.background),
+                floatingActionButton = {
             FloatingActionButton(onClick = { showAddDialog = true }) {
                 Icon(Icons.Default.Add, contentDescription = "Add budget")
             }

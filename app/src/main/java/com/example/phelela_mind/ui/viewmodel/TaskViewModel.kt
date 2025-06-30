@@ -4,8 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.phelela_mind.data.task.TaskDao
-import com.example.phelela_mind.data.task.TaskEntity
+import com.example.phelela_mind.data.task.local.Task
+import com.example.phelela_mind.data.task.repository.TaskRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -13,9 +13,9 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
+class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
-    val tasks: StateFlow<List<TaskEntity>> = taskDao.getAllTasks()
+    val tasks: StateFlow<List<Task>> = repository.getAllTasks()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
@@ -25,12 +25,12 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
     private val _selectedDateMillis = MutableStateFlow<Long?>(null)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val tasksForSelectedDate: StateFlow<List<TaskEntity>> = _selectedDateMillis
+    val tasksForSelectedDate: StateFlow<List<Task>> = _selectedDateMillis
         .filterNotNull()
         .flatMapLatest { millis ->
             val startOfDay = getStartOfDayInMillis(millis)
             val endOfDay = getEndOfDayInMillis(millis)
-            taskDao.getTasksForDate(startOfDay, endOfDay)
+            repository.getTasksForDate(startOfDay, endOfDay)
         }
         .stateIn(
             viewModelScope,
@@ -44,28 +44,28 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
 
     fun addTask(title: String, scheduledForDate: Long? = null) {
         viewModelScope.launch {
-            val newTask = TaskEntity(
+            val newTask = Task(
                 title = title,
                 description = null,
                 scheduledForDate = scheduledForDate ?: System.currentTimeMillis()
             )
-            taskDao.insertTask(newTask)
+            repository.insertTask(newTask)
         }
     }
 
-    fun deleteTask(task: TaskEntity) {
+    fun deleteTask(task: Task) {
         viewModelScope.launch {
-            taskDao.deleteTask(task)
+            repository.deleteTask(task)
         }
     }
 
-    fun updateTask(task: TaskEntity) {
+    fun updateTask(task: Task) {
         viewModelScope.launch {
-            taskDao.updateTask(task)
+            repository.updateTask(task)
         }
     }
 
-    fun onTaskCheckedChange(task: TaskEntity, isChecked: Boolean) {
+    fun onTaskCheckedChange(task: Task, isChecked: Boolean) {
         val updatedTask = task.copy(isDone = isChecked)
         updateTask(updatedTask)
     }
@@ -93,11 +93,11 @@ class TaskViewModel(private val taskDao: TaskDao) : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    val tasksForToday: StateFlow<List<TaskEntity>> = getTasksForDateFlow(todayStart, todayEnd)
+    val tasksForToday: StateFlow<List<Task>> = getTasksForDateFlow(todayStart, todayEnd)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    private fun getTasksForDateFlow(start: Long, end: Long): Flow<List<TaskEntity>> {
-        return taskDao.getTasksForDate(start, end)
+    private fun getTasksForDateFlow(start: Long, end: Long): Flow<List<Task>> {
+        return repository.getTasksForDate(start, end)
     }
 
     private val todayStart: Long

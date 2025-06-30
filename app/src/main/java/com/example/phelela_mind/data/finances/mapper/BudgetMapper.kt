@@ -1,6 +1,8 @@
-package com.example.phelela_mind.data.finances
+package com.example.phelela_mind.data.finances.mapper
 
 import androidx.compose.runtime.mutableDoubleStateOf
+import com.example.phelela_mind.data.finances.local.Budget
+import com.example.phelela_mind.data.finances.local.BudgetEntity
 
 fun BudgetEntity.toBudget(): Budget {
     return Budget(id, name, initial, mutableDoubleStateOf(spent))

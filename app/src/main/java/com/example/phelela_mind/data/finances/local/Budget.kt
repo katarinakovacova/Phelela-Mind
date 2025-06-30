@@ -1,4 +1,4 @@
-package com.example.phelela_mind.data.finances
+package com.example.phelela_mind.data.finances.local
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableDoubleStateOf

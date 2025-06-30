@@ -1,4 +1,7 @@
-package com.example.phelela_mind.data.finances
+package com.example.phelela_mind.data.finances.repository
+
+import com.example.phelela_mind.data.finances.local.BudgetDao
+import com.example.phelela_mind.data.finances.local.BudgetEntity
 
 class BudgetRepository(private val dao: BudgetDao) {
     suspend fun getAllBudgets(): List<BudgetEntity> = dao.getAll()

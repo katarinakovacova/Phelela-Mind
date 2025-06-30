@@ -2,14 +2,13 @@ package com.example.phelela_mind.ui.viewmodel
 
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.phelela_mind.data.finances.Budget
-import com.example.phelela_mind.data.finances.BudgetEntity
-import com.example.phelela_mind.data.finances.BudgetRepository
-import com.example.phelela_mind.data.finances.toBudget
-import com.example.phelela_mind.data.finances.toEntity
+import com.example.phelela_mind.data.finances.local.Budget
+import com.example.phelela_mind.data.finances.local.BudgetEntity
+import com.example.phelela_mind.data.finances.repository.BudgetRepository
+import com.example.phelela_mind.data.finances.mapper.toBudget
+import com.example.phelela_mind.data.finances.mapper.toEntity
 import kotlinx.coroutines.launch
 
 class BudgetViewModel(

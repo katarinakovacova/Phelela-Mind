@@ -7,16 +7,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.phelela_mind.ui.screens.CalendarScreen
 import com.example.phelela_mind.ui.screens.FinancesScreen
 import com.example.phelela_mind.ui.screens.HomeScreen
-import com.example.phelela_mind.ui.screens.NotificationScreen
 import com.example.phelela_mind.ui.screens.SettingsScreen
 import com.example.phelela_mind.ui.screens.TaskScreen
+import com.example.phelela_mind.ui.viewmodel.BudgetViewModel
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -25,7 +24,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SetUpNavigationGraph(
     navController: NavHostController,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    darkThemeEnabled: Boolean,
+    onToggleDarkTheme: (Boolean) -> Unit
 ) {
 
     NavHost(navController = navController, startDestination = Screens.Home.route) {
@@ -43,15 +44,17 @@ fun SetUpNavigationGraph(
             CalendarScreen(innerPadding = innerPadding, viewModel = viewModel)
         }
 
-        composable(Screens.Notification.route) {
-            NotificationScreen(innerPadding = innerPadding)
+        composable(Screens.Finances.route) {
+            val viewModel: BudgetViewModel = koinViewModel()
+            FinancesScreen(innerPadding = innerPadding, viewModel = viewModel)
         }
 
-        composable("finances") { FinancesScreen(innerPadding = innerPadding) }
-
-
         composable(Screens.Settings.route) {
-            SettingsScreen(innerPadding = innerPadding)
+            SettingsScreen(
+                innerPadding = innerPadding,
+                isDarkTheme = darkThemeEnabled,
+                onToggleDarkTheme = onToggleDarkTheme
+            )
         }
     }
 }

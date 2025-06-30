@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.phelela_mind.data.finances.Budget
+import com.example.phelela_mind.data.finances.local.Budget
 
 @Composable
 fun BudgetCard(

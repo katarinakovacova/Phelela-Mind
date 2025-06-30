@@ -1,4 +1,4 @@
-package com.example.phelela_mind.data.finances
+package com.example.phelela_mind.data.finances.local
 
 import androidx.room.*
 

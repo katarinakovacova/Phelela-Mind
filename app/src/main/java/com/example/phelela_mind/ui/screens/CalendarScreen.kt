@@ -11,7 +11,6 @@ import java.util.*
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 
@@ -28,7 +27,7 @@ fun CalendarScreen(innerPadding: PaddingValues, viewModel: TaskViewModel) {
         modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
-            .background(Color.White),
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -46,7 +45,6 @@ fun CalendarScreen(innerPadding: PaddingValues, viewModel: TaskViewModel) {
                     .format(Date(it))
                 selectedDateFormatted = formatted
 
-                // Nastav ViewModelu vybraný dátum, aby načítal úlohy z DB
                 viewModel.setSelectedDate(it)
 
                 showDialog = true
@@ -56,7 +54,7 @@ fun CalendarScreen(innerPadding: PaddingValues, viewModel: TaskViewModel) {
         Text(
             text = "Selected date: ${selectedDateFormatted ?: "No date selected"}",
             fontSize = 18.sp,
-            color = Color.DarkGray,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(top = 16.dp)
         )
     }

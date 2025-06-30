@@ -9,7 +9,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.phelela_mind.data.task.TaskEntity
+import com.example.phelela_mind.data.task.local.Task
 import com.example.phelela_mind.ui.components.task.TaskItem
 import com.example.phelela_mind.ui.viewmodel.TaskViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -28,13 +28,13 @@ fun TaskScreen(
     }
 
     val tasks by viewModel.tasks.collectAsState()
-    var taskBeingEdited by remember { mutableStateOf<TaskEntity?>(null) }
+    var taskBeingEdited by remember { mutableStateOf<Task?>(null) }
     var editedText by remember { mutableStateOf(TextFieldValue("")) }
 
     var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    var taskToDelete by remember { mutableStateOf<TaskEntity?>(null) }
+    var taskToDelete by remember { mutableStateOf<Task?>(null) }
     var showDeleteConfirmDialog by remember { mutableStateOf(false) }
 
     val dateFormat = remember { SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()) }
