@@ -30,20 +30,20 @@
     - Visual calendar interface
     - Tap any date to view tasks for that day
 <p align="center">
-  <img src="app/src/main/assets/screens/calendar.png" alt="Calendar" width="25%" />
-  <img src="app/src/main/assets/screens/calendar-dark.png" alt="Calendar Dark" width="25%" />
-  <img src="app/src/main/assets/screens/calendar-list.png" alt="Calendar List" width="25%" />
-  <img src="app/src/main/assets/screens/calendar-list-dark.png" alt="Calendar List Dark" width="25%" />
+  <img src="app/src/main/assets/screens/calendar.png" alt="Calendar" width="20%" />
+  <img src="app/src/main/assets/screens/calendar-dark.png" alt="Calendar Dark" width="20%" />
+  <img src="app/src/main/assets/screens/calendar-list.png" alt="Calendar List" width="20%" />
+  <img src="app/src/main/assets/screens/calendar-list-dark.png" alt="Calendar List Dark" width="20%" />
 </p>
 
 - **Budget Tracker**:
     - Create custom budgets for various needs
     - Add expenses and monitor remaining budget in real time
 <p align="center">
-  <img src="app/src/main/assets/screens/budget-with-expense.png" alt="Budget Screen" width="25%" />
-  <img src="app/src/main/assets/screens/budgets-dark.png" alt="Settings Screen" width="25%" />
-  <img src="app/src/main/assets/screens/new-budget.png" alt="New Budget" width="25%" />
-  <img src="app/src/main/assets/screens/expense.png" alt="Expense" width="25%" />
+  <img src="app/src/main/assets/screens/budget-with-expense.png" alt="Budget Screen" width="20%" />
+  <img src="app/src/main/assets/screens/budgets-dark.png" alt="Settings Screen" width="20%" />
+  <img src="app/src/main/assets/screens/new-budget.png" alt="New Budget" width="20%" />
+  <img src="app/src/main/assets/screens/expense.png" alt="Expense" width="20%" />
 </p>
 
 - **Settings**:
@@ -69,3 +69,8 @@ Phelela-Mind uses modern Android development tools and libraries, including:
 - **Dark Mode Support**
 
 ---
+
+## License
+
+This project is licensed under the MIT License.  
+See the [LICENSE](./LICENSE) file for details.
