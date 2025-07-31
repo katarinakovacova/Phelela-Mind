@@ -65,10 +65,99 @@ Phelela-Mind uses modern Android development tools and libraries, including:
 - **Koin** for dependency injection
 - **Material 3 UI Components**
 - **Android Navigation Component**
-- **Generative AI client (Google)** (for future expansion or functionality)
 - **Dark Mode Support**
 
 ---
+
+## Architecture
+
+This project follows the principles of **Clean Architecture** and the **MVVM (Model-View-ViewModel)** pattern, with a clear separation of concerns across the following layers:
+
+```
+com.example.phelela_mind
+├── data                        # Data layer: Room DB, mappers, repositories
+│   ├── finances                # Budget & expense data
+│   │   ├── local               # Room entities and DAO for budgeting
+│   │   ├── mapper              # Converts between entity and domain
+│   │   └── repository          # BudgetRepository implementation
+│   ├── task                    # Task data logic
+│   │   ├── local               # Room entities and DAO for tasks
+│   │   ├── mapper              # Converts between entity and domain
+│   │   └── repository          # TaskRepository implementation
+│   └── AppDatabase.kt          # Central Room database holder
+├── di                          # Dependency injection setup (Koin modules)
+│   └── DatabaseModule.kt
+├── ui                          # UI layer built with Jetpack Compose
+│   ├── components              # Reusable UI widgets
+│   │   ├── budget              # Components for budget screen (dialogs, cards)
+│   │   └── task                # Task list item composable
+│   ├── navigation              # App navigation structure (NavGraph, items)
+│   ├── screens                 # Individual screens (Calendar, Tasks, etc.)
+│   ├── theme                   # Colors, typography, theme definitions
+├── viewmodel                   # ViewModels for tasks and budgeting
+│   ├── BudgetViewModel.kt
+│   └── TaskViewModel.kt
+├── MainScreen.kt               # Main layout with scaffold and navigation drawer
+├─ MainActivity.kt             # Entry point for the app
+└─ PhelelaMindApp.kt           # Application class (initializes Koin etc.)
+```
+
+### Directory Structure
+
+```
+com.example.phelela_mind
+├── data
+│   ├── finances
+│   │   ├── local
+│   │   │   ├── BudgetEntity.kt
+│   │   │   └── BudgetDao.kt
+│   │   │   └── Budget.kt
+│   │   ├── mapper
+│   │   │   └── BudgetMapper.kt
+│   │   ├── repository
+│   │   │   └── BudgetRepository.kt
+│   ├── task
+│   │   ├── local
+│   │   │   ├── TaskEntity.kt
+│   │   │   └── TaskDao.kt
+│   │   │   └── Task.kt
+│   │   ├── mapper
+│   │   │   └── TaskMapper.kt
+│   │   ├── repository
+│   │   │   └── TaskRepository.kt
+│   └── AppDatabase.kt
+├── di
+│   └── DatabaseModule.kt
+├── ui
+│   ├── components
+│   │   ├── budget
+│   │   │   ├── BudgetCard.kt
+│   │   │   ├── BudgetDialog.kt
+│   │   │   └── ExpenseDialog.kt
+│   │   └── task
+│   │       └── TaskItem.kt
+│   ├── navigation
+│   │   ├── NavigationBarLayout.kt
+│   │   ├── NavigationGraph.kt
+│   │   ├── NavigationItem.kt
+│   │   └── Screens.kt
+│   ├── screens
+│   │   ├── CalendarScreen.kt
+│   │   ├── FinancesScreen.kt
+│   │   ├── HomeScreen.kt
+│   │   ├── SettingsScreen.kt
+│   │   └── TaskScreen.kt
+│   ├── theme
+│   │   ├── Color.kt
+│   │   ├── Theme.kt
+│   │   └── Type.kt
+├── viewmodel
+│   ├── BudgetViewModel.kt
+│   └── TaskViewModel.kt
+├── MainScreen.kt
+├─MainActivity.kt
+└─PhelelaMindApp.kt
+```
 
 ## License
 
