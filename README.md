@@ -43,7 +43,7 @@
   <img src="app/src/main/assets/screens/budget-with-expense.png" alt="Budget Screen" width="25%" />
   <img src="app/src/main/assets/screens/budgets-dark.png" alt="Settings Screen" width="25%" />
   <img src="app/src/main/assets/screens/new-budget.png" alt="New Budget" width="25%" />
-  <img src="app/src/main/assets/screens/budget-with-expense.png" alt="Budget with expense" width="25%" />
+  <img src="app/src/main/assets/screens/expense.png" alt="Expense" width="25%" />
 </p>
 
 - **Settings**:
